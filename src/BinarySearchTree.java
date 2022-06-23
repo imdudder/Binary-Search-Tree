@@ -75,25 +75,24 @@ public class BinarySearchTree {
     }
 
     private TreeNode removeHelper(int valueToRemove, TreeNode subroot) {
-        TreeNode nodeToReturn = null;
         if (subroot != null) {
             if (valueToRemove == subroot.value) {
                 // Frequency is greater than 1
                 if (subroot.freqCount > 1) {
                     subroot.freqCount--;
-                    nodeToReturn = subroot;
+                    return subroot;
                 }
                 // Leaf
                 else if (subroot.left == null && subroot.right == null) {
-                    nodeToReturn = null;
+                    return null;
                 }
                 // One child (left)
                 else if (subroot.left != null && subroot.right == null) {
-                    nodeToReturn = subroot.left;
+                    return subroot.left;
                 }
                 // One child (right)
                 else if (subroot.left == null && subroot.right != null) {
-                    nodeToReturn = subroot.right;
+                    return subroot.right;
                 }
                 // Two children
                 else if (subroot.left != null && subroot.right != null) {
@@ -102,30 +101,30 @@ public class BinarySearchTree {
                         leftLink = leftLink.left;
                     }
                     leftLink.left = subroot.left;
-                    nodeToReturn = subroot.right;
+                    return subroot.right;
                 }
 
             }
             else if (valueToRemove < subroot.value) {
                 if (subroot.left == null) {
-                    nodeToReturn = null; // Value not found
+                    return null; // Value not found
                 }
                 else {
                     subroot.left = removeHelper(valueToRemove, subroot.left);
-                    nodeToReturn = subroot;
+                    return subroot;
                 }
             }
             else if (valueToRemove > subroot.value) {
                 if (subroot.right == null) {
-                    nodeToReturn = null; // Value not found
+                    return null; // Value not found
                 }
                 else {
                     subroot.right = removeHelper(valueToRemove, subroot.right);
-                    nodeToReturn = subroot;
+                    return subroot;
                 }
             }
         }
-        return nodeToReturn;
+        return null;
     }
 
 
