@@ -75,57 +75,57 @@ public class BinarySearchTree {
     }
 
     private TreeNode removeHelper(int valueToRemove, TreeNode subroot) {
-        if (subroot == null) /*If root passed in was null*/ {
-            return null;
-        }
-        else if (valueToRemove == subroot.value) {
-            // Frequency is greater than 1
-            if (subroot.freqCount > 1) {
-                subroot.freqCount--;
-                return subroot;
-            }
-            // Leaf
-            if (subroot.left == null && subroot.right == null) {
-                return null;
-            }
-            // One child (left)
-            else if (subroot.left != null && subroot.right == null) {
-                return subroot.left;
-            }
-            // One child (right)
-            else if (subroot.left == null && subroot.right != null) {
-                return subroot.right;
-            }
-            // Two children
-            else if (subroot.left != null && subroot.right != null) {
-                TreeNode leftLink = subroot.right;
-                while (leftLink.left != null) {
-                    leftLink = leftLink.left;
+        TreeNode nodeToReturn = null;
+        if (subroot != null) {
+            if (valueToRemove == subroot.value) {
+                // Frequency is greater than 1
+                if (subroot.freqCount > 1) {
+                    subroot.freqCount--;
+                    nodeToReturn = subroot;
                 }
-                leftLink.left = subroot.left;
-                return subroot.right;
-            }
+                // Leaf
+                else if (subroot.left == null && subroot.right == null) {
+                    nodeToReturn = null;
+                }
+                // One child (left)
+                else if (subroot.left != null && subroot.right == null) {
+                    nodeToReturn = subroot.left;
+                }
+                // One child (right)
+                else if (subroot.left == null && subroot.right != null) {
+                    nodeToReturn = subroot.right;
+                }
+                // Two children
+                else if (subroot.left != null && subroot.right != null) {
+                    TreeNode leftLink = subroot.right;
+                    while (leftLink.left != null) {
+                        leftLink = leftLink.left;
+                    }
+                    leftLink.left = subroot.left;
+                    nodeToReturn = subroot.right;
+                }
 
+            }
+            else if (valueToRemove < subroot.value) {
+                if (subroot.left == null) {
+                    nodeToReturn = null; // Value not found
+                }
+                else {
+                    subroot.left = removeHelper(valueToRemove, subroot.left);
+                    nodeToReturn = subroot;
+                }
+            }
+            else if (valueToRemove > subroot.value) {
+                if (subroot.right == null) {
+                    nodeToReturn = null; // Value not found
+                }
+                else {
+                    subroot.right = removeHelper(valueToRemove, subroot.right);
+                    nodeToReturn = subroot;
+                }
+            }
         }
-        else if (valueToRemove < subroot.value) {
-            if (subroot.left == null) {
-                return null; // Value not found
-            }
-            else {
-                subroot.left = removeHelper(valueToRemove, subroot.left);
-                return subroot;
-            }
-        }
-        else if (valueToRemove > subroot.value) {
-            if (subroot.right == null) {
-                return null; // Value not found
-            }
-            else {
-                subroot.right = removeHelper(valueToRemove, subroot.right);
-                return subroot;
-            }
-        }
-        return null;
+        return nodeToReturn;
     }
 
 
