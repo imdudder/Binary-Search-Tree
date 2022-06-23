@@ -22,6 +22,7 @@ public class Main {
         bst.find(100);
 
         // Test Remove
+        bst.remove(3);
 
         // Test Comparison Operators
     }
