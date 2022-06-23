@@ -63,7 +63,7 @@ public class Main {
     public static void testRightChildOnlyCase() {
         BinarySearchTree bst = makeFullTree();
         bst.remove(3);
-        boolean result = bst.remove(5);
+        boolean result = bst.remove(4);
         printTestResults("Right Child Case", result, true);
     }
 
