@@ -15,8 +15,18 @@ public class Main {
         testRightChildOnlyCase();
         testTwoChildCase();
         testRootRemoval();
+        testDuplicateRemoval();
 
         // Test Comparison Operators
+    }
+
+    public static void printTestResults(String testName, boolean result, boolean expectedResult) {
+        if (result == expectedResult) {
+            System.out.println("PASS - " + testName);
+        }
+        else {
+            System.out.println("FAIL - " + testName);
+        }
     }
 
     public static BinarySearchTree makeFullTree() {
@@ -33,65 +43,47 @@ public class Main {
 
     public static void testEmptyRemoval() {
         BinarySearchTree bst = new BinarySearchTree();
-        boolean removedValue = bst.remove(7);
-        if (!removedValue) {
-            System.out.println("PASS - Empty Removal Test");
-        }
-        else {
-            System.out.println("FAIL - empty removal test");
-        }
+        boolean result =  bst.remove(7);
+        printTestResults("Empty Removal",result,false);
     }
 
     public static void testLeafRemoval() {
         BinarySearchTree bst = makeFullTree();
-        boolean removedValue = bst.remove(3);
-        if (removedValue) {
-            System.out.println("PASS - Leaf Removal Test");
-        }
-        else {
-            System.out.println("FAIL - leaf removal");
-        }
+        boolean result = bst.remove(3);
+        printTestResults("Leaf Removal", result, true);
     }
 
     public static void testLeftChildOnlyCase() {
         BinarySearchTree bst = makeFullTree();
         bst.remove(5);
-        if (bst.remove(4)) {
-            System.out.println("PASS - Left Child Only Case");
-        }
-        else {
-            System.out.println("FAIL - left child case");
-        }
+        boolean result = bst.remove(4);
+        printTestResults("Left Child Case", result, true);
     }
 
     public static void testRightChildOnlyCase() {
         BinarySearchTree bst = makeFullTree();
         bst.remove(3);
-        if (bst.remove(5)) {
-            System.out.println("PASS - Right Child Only Case");
-        }
-        else {
-            System.out.println("FAIL - right child case");
-        }
+        boolean result = bst.remove(5);
+        printTestResults("Right Child Case", result, true);
     }
 
     public static void testTwoChildCase() {
         BinarySearchTree bst = makeFullTree();
-        if (bst.remove(10)) {
-            System.out.println("PASS - Two Child Case");
-        }
-        else {
-            System.out.println("FAIL - two child case");
-        }
+        boolean result = bst.remove(10);
+        printTestResults("Two Child Case", result, true);
     }
 
     public static void testRootRemoval() {
         BinarySearchTree bst = makeFullTree();
-        if (bst.remove(7)) {
-            System.out.println("PASS - Root Removal Test");
-        }
-        else {
-            System.out.println("FAIL - root removal case");
-        }
+        boolean result = bst.remove(7);
+        printTestResults("Root Removal", result, true);
+    }
+
+    public static void testDuplicateRemoval() {
+        BinarySearchTree bst = makeFullTree();
+        bst.insert(7);
+        bst.remove(7);
+        boolean result = bst.find(7);
+        printTestResults("Duplicate Removal", result, true);
     }
 }
