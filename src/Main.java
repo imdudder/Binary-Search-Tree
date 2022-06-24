@@ -20,6 +20,16 @@ public class Main {
         bst.printPostOrder();
         System.out.print("\n");
 
+        BinarySearchTree bstCopy = new BinarySearchTree(bst);
+        if (bstCopy.isEqualTo(bst)) {
+            System.out.println("Successful clone");
+        }
+        bstCopy.remove(7);
+        bstCopy.insert(1);
+        if (bstCopy.isNotEqualTo(bst)) {
+            System.out.println("The two trees are not equal");
+        }
+
         // Test Remove
         testEmptyRemoval();
         testLeafRemoval();

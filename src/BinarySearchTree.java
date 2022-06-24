@@ -6,6 +6,11 @@ public class BinarySearchTree {
         root = null;
     }
 
+    public BinarySearchTree(BinarySearchTree toCopy) {
+        root = null;
+        this.setEqualTo(toCopy);
+    }
+
     //----------------------------------- Insert -------------------------------------
     public void insert(int val) {
         insertMany(val, 1);
@@ -236,6 +241,11 @@ public class BinarySearchTree {
         else {
             return false;
         }
+    }
+
+    //-------------------------------- isNotEqualTo ----------------------------------
+    public boolean isNotEqualTo(BinarySearchTree otherBst) {
+        return !(this.isEqualTo(otherBst));
     }
 
 
