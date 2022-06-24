@@ -8,6 +8,18 @@ public class Main {
         result = bst.find(3);
         result = bst.find(100);
 
+        System.out.print("In Order: ");
+        bst.printInOrder();
+        System.out.print("\n");
+
+        System.out.print("Pre Order: ");
+        bst.printPreOrder();
+        System.out.print("\n");
+
+        System.out.print("Post Order: ");
+        bst.printPostOrder();
+        System.out.print("\n");
+
         // Test Remove
         testEmptyRemoval();
         testLeafRemoval();
@@ -19,11 +31,6 @@ public class Main {
 
         // Test Assignment Operator
         testAssignment();
-
-        bst.getParentOfTester(7);
-        bst.getParentOfTester(4);
-        bst.getParentOfTester(5);
-        bst.getParentOfTester(1);
     }
 
     public static void printTestResults(String testName, boolean result, boolean expectedResult) {

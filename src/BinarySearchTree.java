@@ -8,20 +8,25 @@ public class BinarySearchTree {
 
     //----------------------------------- Insert -------------------------------------
     public void insert(int val) {
+        insertMany(val, 1);
+    }
+
+    public void insertMany(int val, int numTimes) {
         if (root == null) {
             root = new TreeNode(val);
-            size++;
+            size += numTimes;
         }
         else {
             TreeNode currentNode = root;
             while (currentNode != null) {
                 if (val == currentNode.value) {
-                    currentNode.freqCount++;
+                    currentNode.freqCount += numTimes;
                     break;
                 }
                 else if (val < currentNode.value) {
                     if (currentNode.left == null) {
                         currentNode.left = new TreeNode(val);
+                        currentNode.left.freqCount = numTimes;
                         break;
                     }
                     else {
@@ -31,6 +36,7 @@ public class BinarySearchTree {
                 else if (val > currentNode.value) {
                     if (currentNode.right == null) {
                         currentNode.right = new TreeNode(val);
+                        currentNode.right.freqCount = numTimes;
                         break;
                     }
                     else {
@@ -38,7 +44,7 @@ public class BinarySearchTree {
                     }
                 }
             }
-            size++;
+            size += numTimes;
         }
     }
 
@@ -128,6 +134,44 @@ public class BinarySearchTree {
     }
 
 
+    //------------------------------------ print -------------------------------------
+    public void printPreOrder() {
+        printPreOrder(root);
+    }
+
+    private void printPreOrder(TreeNode subroot) {
+        if (subroot != null) {
+            System.out.print(subroot.value + " (" + subroot.freqCount + "), ");
+            printPreOrder(subroot.left);
+            printPreOrder(subroot.right);
+        }
+    }
+
+    public void printInOrder() {
+        printInOrder(root);
+    }
+
+    private void printInOrder(TreeNode subroot) {
+        if (subroot != null) {
+            printInOrder(subroot.left);
+            System.out.print(subroot.value + " (" + subroot.freqCount + "), ");
+            printInOrder(subroot.right);
+        }
+    }
+
+    public void printPostOrder() {
+        printPostOrder(root);
+    }
+
+    private void printPostOrder(TreeNode subroot) {
+        if (subroot != null) {
+            printPostOrder(subroot.left);
+            printPostOrder(subroot.right);
+            System.out.print(subroot.value + " (" + subroot.freqCount + "), ");
+        }
+    }
+
+
     //---------------------------------- makeEmpty -----------------------------------
     public void makeEmpty() {
         root = null;
@@ -203,9 +247,7 @@ public class BinarySearchTree {
 
     private void setEqualToHelper(TreeNode nodeToCopy) {
         if (nodeToCopy != null) {
-            for (int numInsertions = 1; numInsertions <= nodeToCopy.freqCount; numInsertions++) {
-                this.insert(nodeToCopy.value);
-            }
+            this.insertMany(nodeToCopy.value, nodeToCopy.freqCount);
             setEqualToHelper(nodeToCopy.left);
             setEqualToHelper(nodeToCopy.right);
         }
