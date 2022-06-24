@@ -19,6 +19,11 @@ public class Main {
 
         // Test Assignment Operator
         testAssignment();
+
+        bst.getParentOfTester(7);
+        bst.getParentOfTester(4);
+        bst.getParentOfTester(5);
+        bst.getParentOfTester(1);
     }
 
     public static void printTestResults(String testName, boolean result, boolean expectedResult) {

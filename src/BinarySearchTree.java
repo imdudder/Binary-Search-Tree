@@ -139,6 +139,33 @@ public class BinarySearchTree {
         return (root == null);
     }
 
+    //--------------------------------- getParentOf ----------------------------------
+    private TreeNode getParentOf(int val) {
+        if (root == null || root.value == val) {
+            return null;
+        }
+        TreeNode currentNode = root;
+        while (currentNode != null) {
+            if ((currentNode.left != null && currentNode.left.value == val) ||
+                (currentNode.right != null && currentNode.right.value == val)) {
+                break;  // Found child
+            }
+            else if (val < currentNode.value) {
+                if (currentNode.left == null) {
+                    break;  // Correct parent but child does not yet exist
+                }
+                currentNode = currentNode.left;
+            }
+            else if (val > currentNode.value) {
+                if (currentNode.right == null) {
+                    break; // Correct parent but child does not yet exist
+                }
+                currentNode = currentNode.right;
+            }
+        }
+        return currentNode;
+    }
+
     //=============================== Operator Methods ===============================
 
     //--------------------------------- isEqualTo ------------------------------------
@@ -150,7 +177,7 @@ public class BinarySearchTree {
         return result;
     }
 
-    public boolean isEqualToHelper(TreeNode thisNode, TreeNode otherNode) {
+    private boolean isEqualToHelper(TreeNode thisNode, TreeNode otherNode) {
         if (thisNode == null && otherNode == null) {
             return true;    // Base case
         }
@@ -202,6 +229,7 @@ public class BinarySearchTree {
         public boolean isLeaf() {
             return (left == null && right == null);
         }
+
         //---------- Data ----------
         int value;
         int freqCount;
