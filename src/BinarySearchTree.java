@@ -8,38 +8,34 @@ public class BinarySearchTree {
 
     //----------------------------------- Insert -------------------------------------
     public void insert(int val) {
-        if (root == null) {
-            root = new TreeNode(val);
-            size++;
+        TreeNode parent = getParentOf(val);
+        if (parent == null) {
+            if (root == null) {
+                root = new TreeNode(val);
+            }
+            else {
+                root.freqCount++;
+            }
         }
         else {
-            TreeNode currentNode = root;
-            while (currentNode != null) {
-                if (val == currentNode.value) {
-                    currentNode.freqCount++;
-                    break;
+            if (val < parent.value) {
+                if (parent.left == null) {
+                    parent.left = new TreeNode(val);
                 }
-                else if (val < currentNode.value) {
-                    if (currentNode.left == null) {
-                        currentNode.left = new TreeNode(val);
-                        break;
-                    }
-                    else {
-                        currentNode = currentNode.left;
-                    }
-                }
-                else if (val > currentNode.value) {
-                    if (currentNode.right == null) {
-                        currentNode.right = new TreeNode(val);
-                        break;
-                    }
-                    else {
-                        currentNode = currentNode.right;
-                    }
+                else {
+                    parent.left.freqCount++;
                 }
             }
-            size++;
+            else if (val > parent.value) {
+                if (parent.right == null) {
+                    parent.right = new TreeNode(val);
+                }
+                else {
+                    parent.right.freqCount++;
+                }
+            }
         }
+        size++;
     }
 
     //------------------------------------ find --------------------------------------
