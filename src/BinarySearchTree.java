@@ -188,6 +188,11 @@ public class BinarySearchTree {
         return (root == null);
     }
 
+    //------------------------------------ size --------------------------------------
+    public int size() {
+        return size;
+    }
+
     //--------------------------------- getParentOf ----------------------------------
     private TreeNode getParentOf(int val) {
         if (root == null || root.value == val) {

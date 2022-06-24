@@ -1,13 +1,16 @@
 public class Main {
     public static void main(String[] args) {
+        // Test Instantiation and Insertion
         BinarySearchTree bst = makeFullTree();
-        boolean result = false;
+        printTestResults("Insert Elements Test", bst.size() == 7, true);
 
         // Test Find
-        result = bst.find(7);
-        result = bst.find(3);
-        result = bst.find(100);
+        printTestResults("Find Root", bst.find(7), true);
+        printTestResults("Find Leaf", bst.find(3), true);
+        printTestResults("Find Middle Node", bst.find(10), true);
+        printTestResults("Search Result Doesn't Exist", bst.find(100), false);
 
+        // Test Print
         System.out.print("In Order: ");
         bst.printInOrder();
         System.out.print("\n");
@@ -19,16 +22,6 @@ public class Main {
         System.out.print("Post Order: ");
         bst.printPostOrder();
         System.out.print("\n");
-
-        BinarySearchTree bstCopy = new BinarySearchTree(bst);
-        if (bstCopy.isEqualTo(bst)) {
-            System.out.println("Successful clone");
-        }
-        bstCopy.remove(7);
-        bstCopy.insert(1);
-        if (bstCopy.isNotEqualTo(bst)) {
-            System.out.println("The two trees are not equal");
-        }
 
         // Test Remove
         testEmptyRemoval();
@@ -43,6 +36,8 @@ public class Main {
         testAssignment();
     }
 
+    
+    //================================== Unit Tests ==================================
     public static void printTestResults(String testName, boolean result, boolean expectedResult) {
         if (result == expectedResult) {
             System.out.println("PASS - " + testName);
@@ -114,5 +109,6 @@ public class Main {
         BinarySearchTree toCopy = makeFullTree();
         BinarySearchTree toOverwrite = new BinarySearchTree();
         toOverwrite.setEqualTo(toCopy);
+        printTestResults("Test Assignment", toCopy.isEqualTo(toOverwrite), true);
     }
 }
