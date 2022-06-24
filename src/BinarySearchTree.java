@@ -139,6 +139,52 @@ public class BinarySearchTree {
         return (root == null);
     }
 
+    //=============================== Operator Methods ===============================
+
+    //--------------------------------- isEqualTo ------------------------------------
+    public boolean isEqualTo(BinarySearchTree otherTree) {
+        boolean result = false;
+        if (this.size == otherTree.size) {
+            result = isEqualToHelper(this.root, otherTree.root);
+        }
+        return result;
+    }
+
+    public boolean isEqualToHelper(TreeNode thisNode, TreeNode otherNode) {
+        if (thisNode == null && otherNode == null) {
+            return true;    // Base case
+        }
+        else if (thisNode != null && otherNode != null && thisNode.value == otherNode.value) {
+            if (isEqualToHelper(thisNode.left, otherNode.left)) {
+                return isEqualToHelper(thisNode.right, otherNode.right);
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    //--------------------------------- setEqualTo -----------------------------------
+    public void setEqualTo(BinarySearchTree otherTree) {
+        this.makeEmpty();
+        setEqualToHelper(otherTree.root);
+    }
+
+    private void setEqualToHelper(TreeNode nodeToCopy) {
+        if (nodeToCopy != null) {
+            for (int numInsertions = 1; numInsertions <= nodeToCopy.freqCount; numInsertions++) {
+                this.insert(nodeToCopy.value);
+            }
+            setEqualToHelper(nodeToCopy.left);
+            setEqualToHelper(nodeToCopy.right);
+        }
+    }
+
+
     //=============================== Internal Structs================================
     private class TreeNode {
         //-------- Methods ---------

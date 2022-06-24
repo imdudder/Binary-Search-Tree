@@ -17,7 +17,8 @@ public class Main {
         testRootRemoval();
         testDuplicateRemoval();
 
-        // Test Comparison Operators
+        // Test Assignment Operator
+        testAssignment();
     }
 
     public static void printTestResults(String testName, boolean result, boolean expectedResult) {
@@ -85,5 +86,11 @@ public class Main {
         bst.remove(7);
         boolean result = bst.find(7);
         printTestResults("Duplicate Removal", result, true);
+    }
+
+    public static void testAssignment() {
+        BinarySearchTree toCopy = makeFullTree();
+        BinarySearchTree toOverwrite = new BinarySearchTree();
+        toOverwrite.setEqualTo(toCopy);
     }
 }
