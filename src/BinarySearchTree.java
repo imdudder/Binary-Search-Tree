@@ -1,3 +1,6 @@
+import java.util.Queue;
+import java.util.LinkedList;
+
 public class BinarySearchTree {
     //=================================== Methods ====================================
 
@@ -176,6 +179,37 @@ public class BinarySearchTree {
         }
     }
 
+    public void printLevels() {
+        int level = 0;
+        Queue<TreeNode> currentLevel = new LinkedList<TreeNode>();
+        if (root == null) {
+            System.out.println("Empty Tree");
+        }
+        else {
+            currentLevel.add(root);
+            while (!currentLevel.isEmpty()) {
+                Queue<TreeNode> nextLevel = new LinkedList<TreeNode>();
+                System.out.print("Level " + level + ": ");
+                while (!currentLevel.isEmpty()) {
+                    TreeNode curNode = currentLevel.poll();
+                    System.out.print(curNode.value + ", ");
+                    if (curNode.left != null) {
+                        nextLevel.add(curNode.left);
+                    }
+                    if (curNode.right != null) {
+                        nextLevel.add(curNode.right);
+                    }
+                }
+                currentLevel = nextLevel;
+                level++;
+                System.out.println("");
+            }
+        }
+
+
+
+    }
+
 
     //---------------------------------- makeEmpty -----------------------------------
     public void makeEmpty() {
@@ -183,14 +217,21 @@ public class BinarySearchTree {
         size = 0;
     }
 
-    //----------------------------------- isEmpty ------------------------------------
-    public boolean isEmpty() {
-        return (root == null);
-    }
-
-    //------------------------------------ size --------------------------------------
-    public int size() {
-        return size;
+    //----------------------------------- getNode -------------------------------------
+    private TreeNode getNode(int val) {
+        TreeNode current = root;
+        while (current != null) {
+            if (val == current.value) {
+                break;
+            }
+            else if (val < current.value) {
+                current = current.left;
+            }
+            else if (val > current.value) {
+                current = current.right;
+            }
+        }
+        return current;
     }
 
     //--------------------------------- getParentOf ----------------------------------
@@ -269,6 +310,74 @@ public class BinarySearchTree {
     }
 
 
+    //=============================== Get Properties =================================
+    //----------------------------------- isEmpty ------------------------------------
+    public boolean isEmpty() {
+        return (root == null);
+    }
+
+    //------------------------------------ size --------------------------------------
+    public int size() {
+        return size;
+    }
+
+    //----------------------------------- getDepth -----------------------------------
+    public int getDepth(int valueOfNode) {
+        if (root != null)  {
+            TreeNode currentNode = root;
+            int depth = 0;
+            while (currentNode != null) {
+                if (valueOfNode == currentNode.value) {
+                    return depth;
+                }
+                else if (valueOfNode < currentNode.value) {
+                    currentNode = currentNode.left;
+                    depth++;
+                }
+                else if (valueOfNode > currentNode.value) {
+                    currentNode = currentNode.right;
+                    depth++;
+                }
+            }
+        }
+        return -1;
+    }
+
+    //--------------------------------- getTreeHeight --------------------------------
+    public int getTreeHeight() {
+        if (root == null) {
+            return -1;
+        }
+        else {
+            return getHeight(root.value);
+        }
+    }
+
+
+    //----------------------------------- getHeight ----------------------------------
+    public int getHeight(int valueOfNode) {
+        TreeNode currentNode = getNode(valueOfNode);
+        if (currentNode == null) {
+            return -1;
+        }
+        else {
+            return getHeightHelper(currentNode);
+        }
+    }
+
+    public int getHeightHelper(TreeNode currentNode) {
+        if (currentNode == null) {
+            return -1;
+        }
+        else {
+            return 1 + Math.max(getHeightHelper(currentNode.left), getHeightHelper(currentNode.right));
+        }
+    }
+
+
+    //---------------------------------- getDiameter ---------------------------------
+
+
     //=============================== Internal Structs================================
     private class TreeNode {
         //-------- Methods ---------
@@ -299,7 +408,6 @@ public class BinarySearchTree {
     private TreeNode root;
     private int size;
 }
-
 
 //================================================================================
 //--------------------------------------------------------------------------------

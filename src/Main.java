@@ -34,11 +34,26 @@ public class Main {
 
         // Test Assignment Operator
         testAssignment();
+
+        // Test depth, height, diameter
+        testDepthOfNodes();
+        testHeight();
+
+        bst.printLevels();
     }
 
-    
+
     //================================== Unit Tests ==================================
     public static void printTestResults(String testName, boolean result, boolean expectedResult) {
+        if (result == expectedResult) {
+            System.out.println("PASS - " + testName);
+        }
+        else {
+            System.out.println("FAIL - " + testName);
+        }
+    }
+
+    public static void printTestResults(String testName, int result, int expectedResult) {
         if (result == expectedResult) {
             System.out.println("PASS - " + testName);
         }
@@ -56,6 +71,18 @@ public class Main {
         bst.insert(10);
         bst.insert(9);
         bst.insert(11);
+        return bst;
+    }
+
+    public static BinarySearchTree makeImperfectTree() {
+        BinarySearchTree bst = new BinarySearchTree();
+        bst.insert(3);
+        bst.insert(1);
+        bst.insert(4);
+        bst.insert(6);
+        bst.insert(5);
+        bst.insert(2);
+        bst.insert(0);
         return bst;
     }
 
@@ -110,5 +137,40 @@ public class Main {
         BinarySearchTree toOverwrite = new BinarySearchTree();
         toOverwrite.setEqualTo(toCopy);
         printTestResults("Test Assignment", toCopy.isEqualTo(toOverwrite), true);
+    }
+
+    public static void testDepthOfNodes() {
+        BinarySearchTree empty = new BinarySearchTree();
+        printTestResults("Depth of empty Tree", empty.getDepth(0), -1);
+
+        BinarySearchTree bst = makeFullTree();
+        int depth = 0;
+        depth = bst.getDepth(7);
+        printTestResults("Depth of root", depth, 0);
+
+        depth = bst.getDepth(4);
+        printTestResults("Depth of level 2", depth, 1);
+
+        depth = bst.getDepth(9);
+        printTestResults("Depth of level 3", depth, 2);
+
+        depth = bst.getDepth(999);
+        printTestResults("Depth of node that isn't in tree", depth, -1);
+    }
+
+    public static void testHeight() {
+        BinarySearchTree empty = new BinarySearchTree();
+        int height = empty.getTreeHeight();
+        printTestResults("Height of empty tree", height, -1);
+
+        BinarySearchTree bst = makeImperfectTree();
+        height = bst.getTreeHeight();
+        printTestResults("Root Height", height, 3);
+
+        height = bst.getHeight(5);
+        printTestResults("Leaf Height", height, 0);
+
+        height = bst.getHeight(4);
+        printTestResults("Middle Node Height", height, 2);
     }
 }
